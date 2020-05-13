@@ -40,7 +40,7 @@ class UpdateProfileService {
             email,
         );
 
-        if (userWithUpdatedEmail && userWithUpdatedEmail.email !== user_id) {
+        if (userWithUpdatedEmail && userWithUpdatedEmail.id !== user_id) {
             throw new AppError('E-mail already in use');
         }
 
