@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { injectable, inject } from 'tsyringe';
 
-import { getDaysInMonth, getDate } from 'date-fns';
+import { getDaysInMonth, getDate, isAfter } from 'date-fns';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 interface IRequest {
@@ -27,6 +27,10 @@ class ListProviderMonthAvailability {
         year,
         month,
     }: IRequest): Promise<IResponse> {
+        const numberOfDaysInMonth = getDaysInMonth(new Date(year, month - 1));
+
+        const currentDate = new Date();
+
         const appointments = await this.appointmentsRepository.findAllInMonthFromProvider(
             {
                 provider_id,
@@ -34,8 +38,6 @@ class ListProviderMonthAvailability {
                 month,
             },
         );
-
-        const numberOfDaysInMonth = getDaysInMonth(new Date(year, month - 1));
 
         const eachDayArray = Array.from(
             { length: numberOfDaysInMonth },
@@ -47,7 +49,14 @@ class ListProviderMonthAvailability {
                 return getDate(appointment.date) === day;
             });
 
-            return { day, available: appointmentsInDay.length < 10 };
+            const compareDateWithDay = new Date(year, month, day);
+
+            return {
+                day,
+                available:
+                    appointmentsInDay.length < 10 &&
+                    isAfter(compareDateWithDay, currentDate),
+            };
         });
 
         return availability;
