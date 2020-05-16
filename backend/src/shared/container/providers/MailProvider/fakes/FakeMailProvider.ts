@@ -1,4 +1,4 @@
-import IMailProvider from '@shared/container/providers/MailProdiver/models/IMailProvider';
+import IMailProvider from '@shared/container/providers/MailProvider/models/IMailProvider';
 import ISendMailDTO from '../dtos/ISendMailDTO';
 
 interface IMessage {
