@@ -20,7 +20,6 @@ class ListProvidersService {
             except_user_id: user_id,
         });
 
-        users.forEach(user => delete user.password);
         return users;
     }
 }
