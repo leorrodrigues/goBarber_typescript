@@ -49,7 +49,14 @@ class ListProviderMonthAvailability {
                 return getDate(appointment.date) === day;
             });
 
-            const compareDateWithDay = new Date(year, month, day);
+            const compareDateWithDay = new Date(
+                year,
+                month - 1,
+                day,
+                23,
+                59,
+                59,
+            );
 
             return {
                 day,
