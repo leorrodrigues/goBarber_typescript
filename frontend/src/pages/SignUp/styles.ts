@@ -28,7 +28,7 @@ const appearFromRight = keyframes`
     }
     to {
         opacity: 1;
-        transofrm: translateX(0)
+        transform: translateX(0)
     }
 `;
 
